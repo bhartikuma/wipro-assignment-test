@@ -1,0 +1,45 @@
+package bharti;
+
+class counter
+{
+	int count=0;
+	void increment()
+{
+	count++;
+}
+}
+public class syncTest extends Thread  {
+public static void main(String[] args)
+{
+counter c=new counter();
+Thread t1= new Thread(() ->
+{
+for(int i=0; i <1000; i++) c.increment();
+});
+ 
+Thread t2= new Thread(() ->
+{
+for(int i=0; i <1000; i++) c.increment();
+});		
+t1.start();
+t2.start();
+ 
+try {
+	t1.join();
+} catch (InterruptedException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+try {
+	t2.join();
+} catch (InterruptedException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+System.out.println(c.count);
+}
+ 
+}
+ 
+ 
+ 
